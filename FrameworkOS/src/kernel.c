@@ -1,9 +1,9 @@
-void kernel_main(void) {
-    volatile char* video = (volatile char*)0xB8000;
-    const char* msg = "FrameworkOS booted (OSDev baseline)";
+#include "terminal.h"
 
-    for (int i = 0; msg[i] != '\0'; i++) {
-        video[i * 2] = msg[i];
-        video[i * 2 + 1] = 0x0F;
-    }
+void kernel_main(void) {
+    terminal_initialize();
+
+    terminal_writeline("FrameworkOS booted.");
+    terminal_writeline("VGA terminal driver online.");
+    terminal_writeline("Next: scrolling, colors, and keyboard input.");
 }
