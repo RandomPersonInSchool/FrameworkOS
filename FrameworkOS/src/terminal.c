@@ -8,6 +8,28 @@ static int row = 0;
 static int column = 0;
 static char color = 0x0F;
 
+static void scroll(void) {
+    // Move all lines up
+    for (int y = 1; y < VGA_HEIGHT; y++) {
+        for (int x = 0; x < VGA_WIDTH; x++) {
+            int from = (y * VGA_WIDTH + x) * 2;
+            int to = ((y - 1) * VGA_WIDTH + x) * 2;
+
+            VGA_MEMORY[to] = VGA_MEMORY[from];
+            VGA_MEMORY[to + 1] = VGA_MEMORY[from + 1];
+        }
+    }
+
+    // Clear last line
+    for (int x = 0; x < VGA_WIDTH; x++) {
+        int index = ((VGA_HEIGHT - 1) * VGA_WIDTH + x) * 2;
+        VGA_MEMORY[index] = ' ';
+        VGA_MEMORY[index + 1] = color;
+    }
+
+    row = VGA_HEIGHT - 1;
+}
+
 void terminal_initialize(void) {
     row = 0;
     column = 0;
@@ -38,7 +60,7 @@ void terminal_putchar(char c) {
     }
 
     if (row >= VGA_HEIGHT) {
-        row = 0;
+        scroll();
     }
 }
 

@@ -3,7 +3,7 @@
 void kernel_main(void) {
     terminal_initialize();
 
-    terminal_writeline("FrameworkOS booted.");
-    terminal_writeline("VGA terminal driver online.");
-    terminal_writeline("Next: scrolling, colors, and keyboard input.");
+    for (int i = 0; i < 40; i++) {
+        terminal_writeline("Testing scroll...");
+    }
 }
