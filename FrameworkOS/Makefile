@@ -16,8 +16,11 @@ kernel.o: src/kernel.c
 terminal.o: src/terminal.c
 	$(CC) $(CFLAGS) -c src/terminal.c -o terminal.o
 
-kernel.bin: boot.o kernel.o terminal.o
-	$(LD) $(LDFLAGS) boot.o kernel.o terminal.o -o kernel.bin
+kernel.bin: boot.o kernel.o terminal.o keyboard.o
+	$(LD) $(LDFLAGS) boot.o kernel.o terminal.o keyboard.o -o kernel.bin
+
+keyboard.o: src/keyboard.c
+	$(CC) $(CFLAGS) -c src/keyboard.c -o keyboard.o
 
 iso: kernel.bin
 	mkdir -p iso/boot

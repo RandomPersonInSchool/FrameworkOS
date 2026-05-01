@@ -74,3 +74,44 @@ void terminal_writeline(const char* data) {
     terminal_write(data);
     terminal_putchar('\n');
 }
+
+void terminal_set_color(char new_color) {
+    color = new_color;
+}
+
+void terminal_write_color_test(void) {
+    terminal_writeline("VGA color test:");
+
+    for (int bg = 0; bg < 8; bg++) {
+        for (int fg = 0; fg < 16; fg++) {
+            terminal_set_color((bg << 4) | fg);
+            terminal_write(" Aa ");
+        }
+
+        terminal_set_color(0x0F);
+        terminal_putchar('\n');
+    }
+}
+
+void terminal_backspace(void) {
+    if (column <= 0) {
+        return;
+    }
+
+    column--;
+
+    int index = (row * VGA_WIDTH + column) * 2;
+    VGA_MEMORY[index] = ' ';
+    VGA_MEMORY[index + 1] = color;
+}
+
+void terminal_draw_color_strip(void) {
+    for (int x = 0; x < VGA_WIDTH; x++) {
+        int index = x * 2;
+        VGA_MEMORY[index] = ' ';
+        VGA_MEMORY[index + 1] = x % 16;
+    }
+
+    row = 1;
+    column = 0;
+}
