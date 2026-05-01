@@ -6,6 +6,7 @@
 #define KEY_ENTER 2
 #define KEY_BACKSPACE 3
 #define KEY_CTRL_SHIFT_ENTER 4
+#define KEY_CTRL_C 5
 
 typedef struct {
     int type;

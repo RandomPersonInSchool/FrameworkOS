@@ -45,6 +45,10 @@ KeyEvent keyboard_read_event(void) {
             continue;
         }
 
+        if (ctrl_pressed && key == 0x2E) {
+           return (KeyEvent){ KEY_CTRL_C, 0 };
+        }
+
         if (key == 0x1D) {
             ctrl_pressed = !released;
             continue;
